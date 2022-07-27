@@ -2,6 +2,9 @@ package com.dio.cloudparking.controller.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParkingDTO {
 
     private String id;
