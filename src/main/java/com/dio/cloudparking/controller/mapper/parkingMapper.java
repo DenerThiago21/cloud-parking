@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import com.dio.cloudparking.controller.dto.ParkingCreateDTO;
 import com.dio.cloudparking.controller.dto.ParkingDTO;
 import com.dio.cloudparking.model.Parking;
 
@@ -14,11 +15,25 @@ public class parkingMapper {
     
     private static final ModelMapper MODEL_MAPPER = new ModelMapper();
 
-    public ParkingDTO parkingDTO(Parking parking) {
+    public ParkingDTO toParkingDTO(Parking parking) {
         return MODEL_MAPPER.map(parking, ParkingDTO.class);
     }
 
     public List<ParkingDTO> toParkingDTOList(List<Parking> parkingList) {
-        return parkingList.stream().map(this::parkingDTO).collect(Collectors.toList());
+        return parkingList.stream()
+                            .map(parking -> new ParkingDTO(
+                                    parking.getId(), parking.getLicense(), 
+                                    parking.getState(), parking.getModel(), 
+                                    parking.getColor())
+                                )
+                            .collect(Collectors.toList());
+    }
+
+    public Parking toParking(ParkingDTO dto) {
+        return MODEL_MAPPER.map(dto, Parking.class);
+    }
+
+    public Parking toParkingCreate(ParkingCreateDTO dto) {
+        return MODEL_MAPPER.map(dto, Parking.class);
     }
 }
