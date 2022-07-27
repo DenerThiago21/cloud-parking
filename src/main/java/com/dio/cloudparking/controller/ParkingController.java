@@ -18,6 +18,9 @@ import com.dio.cloudparking.controller.mapper.parkingMapper;
 import com.dio.cloudparking.model.Parking;
 import com.dio.cloudparking.service.ParkingService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
+
 @RestController
 @RequestMapping("/parking")
 public class ParkingController {
@@ -32,6 +35,7 @@ public class ParkingController {
     }
     
     @GetMapping
+    @Operation(description = "find all parkings")
     public ResponseEntity<List<ParkingDTO>> findAll() {
         List<Parking> parkingList = parkingService.findAll();
         List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
@@ -39,6 +43,7 @@ public class ParkingController {
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "find parking with id")
     public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
         Parking parking = parkingService.findById(id);
         ParkingDTO result = parkingMapper.toParkingDTO(parking);
@@ -46,6 +51,7 @@ public class ParkingController {
     }
 
     @PostMapping
+    @Operation(description = "create new parking")
     public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO dto) {
         var parkingCreate = parkingMapper.toParkingCreate(dto);
         Parking parking = parkingService.create(parkingCreate);
