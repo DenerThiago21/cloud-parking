@@ -18,7 +18,7 @@ import com.dio.cloudparking.model.Parking;
 public class ParkingService {
     
     private static Map<String, Parking> parkingMap = new HashMap<>();
-
+/*
     static {
         var id = getUUID();
         var id1 = getUUID();
@@ -27,7 +27,7 @@ public class ParkingService {
         parkingMap.put(id, parking);
         parkingMap.put(id1, parking1);
     }
-
+*/
     public List<Parking> findAll() {
         return parkingMap.values().stream().collect(Collectors.toList());
     }
