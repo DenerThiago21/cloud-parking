@@ -60,8 +60,17 @@ public class ParkingService {
         return parkingById;
     }
 
+    public Parking exit(String id) {
+        //pegar o objeto
+        //setar a hora de saida do estacionamento
+        //calcular o valor total
+        return null;
+    }
+
     private static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
+
+    
 
 }
