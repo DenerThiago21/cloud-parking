@@ -1,6 +1,5 @@
 package com.dio.cloudparking.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
