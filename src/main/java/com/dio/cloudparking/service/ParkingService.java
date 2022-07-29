@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dio.cloudparking.exception.ParkingNotFoundException;
 import com.dio.cloudparking.model.Parking;
@@ -19,15 +21,18 @@ public class ParkingService {
         this.parkingRepository = parkingRepository;
     }
 
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Parking> findAll() {
         return parkingRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Parking findById(String id) {
         return parkingRepository.findById(id).orElseThrow(() -> 
                 new ParkingNotFoundException(id));
     }
 
+    @Transactional
     public Parking create(Parking parkingCreate) {
         String uuid = getUUID();
         parkingCreate.setId(uuid);
@@ -36,11 +41,13 @@ public class ParkingService {
         return parkingCreate;
     }
 
+    @Transactional
     public void delete(String id) {
         findById(id);
         parkingRepository.deleteById(id);
     }
     
+    @Transactional
     public Parking update(String id, Parking parkingCreate) {
         Parking parking = findById(id);
         parking.setColor(parkingCreate.getColor());
@@ -51,11 +58,17 @@ public class ParkingService {
         return parking;
     }
 
-    public Parking exit(String id) {
+    @Transactional
+    public Parking checkOut(String id) {
         //pegar o objeto
+        Parking parking = findById(id);
         //setar a hora de saida do estacionamento
+        parking.setExitDate(LocalDateTime.now());
         //calcular o valor total
-        return null;
+        parking.setBill(ParkingCheckOut.getBill(parking));
+
+        parkingRepository.save(parking);
+        return parking;
     }
 
     private static String getUUID() {
