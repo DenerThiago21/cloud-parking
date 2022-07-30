@@ -13,7 +13,7 @@ import com.dio.cloudparking.controller.dto.ParkingCreateDTO;
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ParkingControllerTestIT {
+public class ParkingControllerTestIT extends AbstractContainerBase {
  
     @LocalServerPort
     private int randomPort;
@@ -56,3 +56,6 @@ public class ParkingControllerTestIT {
                     
     }
 }
+
+
+//docker run -p 15432:15432 --name parkingdb -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=parking -d postgres:11.16-alpine
