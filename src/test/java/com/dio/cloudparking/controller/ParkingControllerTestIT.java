@@ -28,6 +28,8 @@ public class ParkingControllerTestIT extends AbstractContainerBase {
         whenCreateThenCheckIsCreated();
 
         RestAssured.given()
+                    .auth()
+                    .basic("user", "senha")
                     .when()
                     .get("/parking")
                     .then()
@@ -46,6 +48,7 @@ public class ParkingControllerTestIT extends AbstractContainerBase {
 
         RestAssured.given()
                     .when()
+                    .auth().basic("user", "senha")
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(crateDTO)
                     .post("/parking")
